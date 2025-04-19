@@ -11,7 +11,7 @@ describe('LoanRequestComponent', () => {
       imports: [LoanRequestComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(LoanRequestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

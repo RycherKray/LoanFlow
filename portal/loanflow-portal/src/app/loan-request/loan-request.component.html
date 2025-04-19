@@ -1,0 +1,58 @@
+<div class="form-container">
+    <h2>Submit Loan Request</h2>
+  
+    <form (ngSubmit)="submit()" #loanForm="ngForm" class="loan-form">
+      <div class="field">
+        <label for="customerName">Name</label>
+        <input
+          id="customerName"
+          name="customerName"
+          required
+          [(ngModel)]="customerName"
+          placeholder="Jane Doe"
+        />
+      </div>
+  
+      <div class="field">
+        <label for="amount">Amount</label>
+        <div class="input-with-prefix">
+          <span class="prefix">$</span>
+          <input
+            id="amount"
+            name="amount"
+            type="number"
+            required
+            [(ngModel)]="amount"
+            placeholder="10000"
+          />
+        </div>
+      </div>
+  
+      <div class="field">
+        <label for="termMonths">Term (months)</label>
+        <input
+          id="termMonths"
+          name="termMonths"
+          type="number"
+          required
+          [(ngModel)]="termMonths"
+          placeholder="12"
+        />
+      </div>
+  
+      <div class="field">
+        <label for="type">Loan Type</label>
+        <select id="type" name="type" required [(ngModel)]="type">
+          <option value="" disabled>Select a type...</option>
+          <option value="Auto">Auto</option>
+          <option value="Personal">Personal</option>
+          <option value="Heloc">Home Equity</option>
+        </select>
+      </div>
+  
+      <button type="submit" [disabled]="loanForm.invalid" class="btn-submit">
+        Submit Request
+      </button>
+    </form>
+  </div>
+  
