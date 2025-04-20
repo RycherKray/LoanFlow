@@ -19,8 +19,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\LoanFlow.Application\LoanFlow.Application.csproj" />
-    <ProjectReference Include="..\src\LoanFlow.Infrastructure\LoanFlow.Infrastructure.csproj" />
+    <ProjectReference Include="..\LoanFlow.Application\LoanFlow.Application.csproj" />
+    <ProjectReference Include="..\LoanFlow.Infrastructure\LoanFlow.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
