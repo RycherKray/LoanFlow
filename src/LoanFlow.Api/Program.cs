@@ -7,6 +7,9 @@ using LoanFlow.Infrastructure.Services;
 using LoanFlow.Application.Services;
 using LoanFlow.Application.Repositories;
 using System.Text.Json.Serialization;
+using LoanFlow.Infrastructure.Repositories;
+using Microsoft.Azure.Cosmos;
+using LoanFlow.Application.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +27,17 @@ builder.Services.AddDbContext<LoanDbContext>(opt =>
 // Repository
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 
+// Cosmos
+builder.Services.AddSingleton(sp => new CosmosClient(builder.Configuration["Cosmos:Conn"]));
+builder.Services.AddScoped<IProcessedLoanRepository, CosmosProcessedLoanRepository>();
+
 // MediatR
 builder.Services.AddMediatR(cfg =>
   cfg.RegisterServicesFromAssembly(typeof(CreateLoanRequestCommand).Assembly)
+);
+
+builder.Services.AddMediatR(cfg =>
+  cfg.RegisterServicesFromAssembly(typeof(ListLoanRequestsQuery).Assembly)
 );
 
 // Service Bus

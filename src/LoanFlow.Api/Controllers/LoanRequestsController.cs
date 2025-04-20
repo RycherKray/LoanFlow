@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using LoanFlow.Application.Commands;
+using LoanFlow.Application.Queries;
+using LoanFlow.Application.Models;
 
 namespace LoanFlow.Api.Controllers;
 
@@ -17,4 +19,8 @@ public sealed class LoanRequestsController : ControllerBase
         var id = await _mediator.Send(cmd);
         return CreatedAtAction(null, new { id }, null);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ProcessedLoanDto>>> Get()
+         => Ok(await _mediator.Send(new ListLoanRequestsQuery()));
 }
