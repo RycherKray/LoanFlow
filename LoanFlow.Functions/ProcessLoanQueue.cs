@@ -36,6 +36,8 @@ namespace LoanFlow.Functions
                 var json = message.Body.ToString();
                 _logger.LogInformation("🔔 Raw message body:\n{json}", json);
 
+                var loanEvent = JsonSerializer.Deserialize<LoanRequestCreatedEvent>(json)!;
+
                 var container = _cosmos
                     .GetDatabase("LoanFlow")
                     .GetContainer("ProcessedLoans");
@@ -43,11 +45,16 @@ namespace LoanFlow.Functions
                 // Use messageId as Cosmos document id
                 var doc = new
                 {
-                    id = message.MessageId,
-                    raw = JsonSerializer.Deserialize<object>(json),
-                    processedAt = DateTime.UtcNow
+                    id = loanEvent.Id,
+                    customerName = loanEvent.CustomerName,
+                    amount = loanEvent.Amount,
+                    termMonths = loanEvent.TermMonths,
+                    type = loanEvent.Type,
+                    status = "Processed",
+                    processedAt = DateTime.UtcNow,
                 };
 
+                //Save the document in Cosmos
                 await container.CreateItemAsync(doc);
 
                 _logger.LogInformation("✅ Message stored in Cosmos DB with ID: {id}", message.MessageId);

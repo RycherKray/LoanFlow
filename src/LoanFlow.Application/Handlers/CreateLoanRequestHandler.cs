@@ -31,7 +31,7 @@ public class CreateLoanRequestHandler
         };
 
         await _repo.AddAsync(loan, ct);
-        await _sb.SendAsync("loan-processing", new { loan.Id }, ct);
+        await _sb.SendAsync("loan-processing", new { loan.Id, loan.CustomerName, loan.Amount, loan.TermMonths, loan.Type }, ct);
 
         return loan.Id;
     }

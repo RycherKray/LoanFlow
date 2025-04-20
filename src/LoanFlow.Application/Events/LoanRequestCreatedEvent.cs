@@ -1,4 +1,5 @@
-﻿using LoanFlow.Domain.Enums;
+﻿using LoanFlow.Domain;
+using LoanFlow.Domain.Enums;
 namespace LoanFlow.Application.Events
 {
     public class LoanRequestCreatedEvent
@@ -6,7 +7,7 @@ namespace LoanFlow.Application.Events
         public Guid Id { get; set; }
         public string CustomerName { get; set; } = default!;
         public decimal Amount { get; set; }
-        public int TermMonths { get; set; }
+        public int TermMonths { get; set; }         
         public LoanType Type { get; set; }
     }
 }
