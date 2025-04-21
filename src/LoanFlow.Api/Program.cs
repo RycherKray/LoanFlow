@@ -18,16 +18,16 @@ using Microsoft.Identity.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 
+var allowedOrigins = "allowedOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", policy =>
-    {
-        policy
-            .WithOrigins("https://icy-forest-0aa10540f.6.azurestaticapps.net")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
+    options.AddPolicy(name: allowedOrigins,
+        policy =>
+        {
+            policy.WithOrigins("https://icy-forest-0aa10540f.6.azurestaticapps.net")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -68,7 +68,7 @@ builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
 var app = builder.Build();
-app.UseCors("AllowSpecificOrigin");
+app.UseCors(allowedOrigins);
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
