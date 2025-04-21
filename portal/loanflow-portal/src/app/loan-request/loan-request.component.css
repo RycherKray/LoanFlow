@@ -1,78 +1,87 @@
-.form-container {
-    max-width: 500px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  .form-container h2 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-size: 1.75rem;
-    color: #333;
-  }
-  
-  .loan-form .field {
-    margin-bottom: 1.25rem;
-  }
-  
-  .loan-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #444;
-  }
-  
-  .loan-form input,
-  .loan-form select {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .input-with-prefix {
-    display: flex;
-    align-items: center;
-  }
-  
-  .prefix {
-    padding: 0.5rem;
-    background: #eee;
-    border: 1px solid #ccc;
-    border-right: none;
-    border-radius: 4px 0 0 4px;
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  .input-with-prefix input {
-    border-radius: 0 4px 4px 0;
-    border-left: none;
-  }
-  
-  .btn-submit {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #1a73e8;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .btn-submit:disabled {
-    background-color: #999;
-    cursor: not-allowed;
-  }
-  
-  .btn-submit:not(:disabled):hover {
-    background-color: #1669c1;
-  }
-  
+.loan-request-container {
+  padding: 2rem;
+  background-color: #f8f9fb;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loans-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.loans-table th,
+.loans-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal form label {
+  margin-bottom: 1rem;
+}
+
+.modal form input,
+.modal form select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}

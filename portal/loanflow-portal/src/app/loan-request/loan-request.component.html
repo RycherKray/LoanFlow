@@ -1,58 +1,63 @@
-<div class="form-container">
-    <h2>Submit Loan Request</h2>
-  
-    <form (ngSubmit)="submit()" #loanForm="ngForm" class="loan-form">
-      <div class="field">
-        <label for="customerName">Name</label>
-        <input
-          id="customerName"
-          name="customerName"
-          required
-          [(ngModel)]="customerName"
-          placeholder="Jane Doe"
-        />
-      </div>
-  
-      <div class="field">
-        <label for="amount">Amount</label>
-        <div class="input-with-prefix">
-          <span class="prefix">$</span>
-          <input
-            id="amount"
-            name="amount"
-            type="number"
-            required
-            [(ngModel)]="amount"
-            placeholder="10000"
-          />
-        </div>
-      </div>
-  
-      <div class="field">
-        <label for="termMonths">Term (months)</label>
-        <input
-          id="termMonths"
-          name="termMonths"
-          type="number"
-          required
-          [(ngModel)]="termMonths"
-          placeholder="12"
-        />
-      </div>
-  
-      <div class="field">
-        <label for="type">Loan Type</label>
-        <select id="type" name="type" required [(ngModel)]="type">
-          <option value="" disabled>Select a type...</option>
-          <option value="Auto">Auto</option>
-          <option value="Personal">Personal</option>
-          <option value="Heloc">Home Equity</option>
-        </select>
-      </div>
-  
-      <button type="submit" [disabled]="loanForm.invalid" class="btn-submit">
-        Submit Request
-      </button>
-    </form>
+<div class="loan-request-container">
+  <div class="header">
+    <h2>Processed Loans</h2>
+    <button (click)="showForm = true" class="btn-primary">New Request</button>
   </div>
-  
+
+  <!-- Loan Table -->
+  <table class="loans-table" *ngIf="loans.length > 0">
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Term (mo.)</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Processed At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of loans">
+        <td>{{ loan.customerName }}</td>
+        <td>{{ loan.amount | currency }}</td>
+        <td>{{ loan.termMonths }}</td>
+        <td>{{ loan.type }}</td>
+        <td>{{ loan.status }}</td>
+        <td>{{ loan.processedAt | date: 'MMMM d, y' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="showForm">
+    <div class="modal">
+      <h3>New Loan Request</h3>
+      <form (ngSubmit)="submitLoan()" #loanForm="ngForm">
+        <label>
+          Customer Name:
+          <input type="text" [(ngModel)]="newLoan.customerName" name="customerName" required />
+        </label>
+        <label>
+          Amount:
+          <input type="number" [(ngModel)]="newLoan.amount" name="amount" required />
+        </label>
+        <label>
+          Term Months:
+          <input type="number" [(ngModel)]="newLoan.termMonths" name="termMonths" required />
+        </label>
+        <label>
+          Type:
+          <select [(ngModel)]="newLoan.type" name="type" required>
+            <option [value]="0">Auto</option>
+            <option [value]="1">Personal</option>
+            <option [value]="2">Heloc</option>
+          </select>
+        </label>
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Submit</button>
+          <button type="button" class="btn-secondary" (click)="showForm = false">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,19 @@ using LoanFlow.Application.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularLocalhost", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 // Controllers
 builder.Services
   .AddControllers()
@@ -48,5 +61,8 @@ builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
 var app = builder.Build();
+app.UseRouting();
+app.UseCors("AllowAngularLocalhost");
+
 app.MapControllers();
 app.Run();

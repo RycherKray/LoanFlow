@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoanRequestDto } from './models/loan-request.model';
+import { LoanRequestService } from './services/loan-request.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule }  from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-loan-request',
@@ -9,34 +11,38 @@ import { FormsModule }  from '@angular/forms';
   templateUrl: './loan-request.component.html',
   styleUrls: ['./loan-request.component.css']
 })
-export class LoanRequestComponent {
-  // --- form fields ---
-  customerName = '';
-  amount = 1000;
-  termMonths = 12;
-  type: 'Auto' | 'Personal' | 'Heloc' = 'Auto';
+export class LoanRequestComponent implements OnInit {
+  loans: LoanRequestDto[] = [];
+  showForm = false;
 
-  // --- UI state ---
-  isLoading = false;
-  result = '';
-  error = '';
+  newLoan = {
+    customerName: '',
+    amount: 0,
+    termMonths: 0,
+    type: 0
+  };
 
-  submit(): void {
-    // basic client‑side validation
-    if (!this.customerName.trim()) {
-      this.error = 'Please enter your name.';
-      return;
-    }
-    this.error = '';
-    this.result = '';
-    this.isLoading = true;
+  constructor(private loanService: LoanRequestService) {}
 
-    // simulate async call
-    setTimeout(() => {
-      this.isLoading = false;
-      this.result = `✅ Loan for ${this.customerName} ($${this.amount.toFixed(
-        2
-      )}, ${this.termMonths} mo, ${this.type}) submitted!`;
-    }, 800);
+  ngOnInit() {
+    this.fetchLoans();   
+  }
+
+  fetchLoans() {
+    this.loanService.getLoans().subscribe({
+      next: (loans) => (this.loans = loans),
+      error: () => console.error('Could not load loans')
+    });
+  }
+
+  submitLoan() {
+    this.loanService.createLoan(this.newLoan).subscribe({
+      next: () => {
+        this.showForm = false;
+        this.fetchLoans(); // refresh the table
+        this.newLoan = { customerName: '', amount: 0, termMonths: 0, type: 0 };
+      },
+      error: () => console.error('Could not submit loan')
+    });
   }
 }

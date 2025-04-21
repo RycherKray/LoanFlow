@@ -7,7 +7,7 @@ namespace LoanFlow.Application.Models
         string CustomerName,
         decimal Amount,
         int TermMonths,
-        int Type,           
+        string Type,           
         string Status,      
         DateTime ProcessedAt
     );

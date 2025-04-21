@@ -49,7 +49,7 @@ namespace LoanFlow.Functions
                     customerName = loanEvent.CustomerName,
                     amount = loanEvent.Amount,
                     termMonths = loanEvent.TermMonths,
-                    type = loanEvent.Type,
+                    type = loanEvent.Type.ToString(),
                     status = "Processed",
                     processedAt = DateTime.UtcNow,
                 };
