@@ -29,6 +29,11 @@ jobs:
       - name: 📦 Push Docker image to Docker Hub
         run: |
           docker push $DOCKER_REGISTRY/$DOCKER_REPO/$IMAGE_NAME:$DOCKER_TAG
+      - name: 🔐 Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
 
       - name: 🔐 Deploy to Azure App Service (Container)
         uses: azure/webapps-deploy@v2
