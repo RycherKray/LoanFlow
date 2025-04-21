@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-
+    paths:
+      - 'src/**'
+      - 'LoanFlow.sln'
+      - '.github/workflows/backend.yml'
+      
 env:
   IMAGE_NAME: loanflow-api
   DOCKER_REGISTRY: docker.io
