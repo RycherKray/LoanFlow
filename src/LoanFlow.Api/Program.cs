@@ -10,6 +10,9 @@ using System.Text.Json.Serialization;
 using LoanFlow.Infrastructure.Repositories;
 using Microsoft.Azure.Cosmos;
 using LoanFlow.Application.Queries;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,26 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowCredentials();
     });
+});
+
+// Configure JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
 });
 
 // Controllers
@@ -61,6 +84,8 @@ builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
 var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseRouting();
 app.UseCors("AllowAngularLocalhost");
 

@@ -1,0 +1,38 @@
+name: 🚀 Deploy LoanFlow API to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: loanflow-api
+  DOCKER_REGISTRY: docker.io
+  DOCKER_REPO: rycherkray
+  DOCKER_TAG: latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⏬ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🐳 Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: 🏗️ Build Docker image
+        run: |
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPO/$IMAGE_NAME:$DOCKER_TAG ./src
+
+      - name: 📦 Push Docker image to Docker Hub
+        run: |
+          docker push $DOCKER_REGISTRY/$DOCKER_REPO/$IMAGE_NAME:$DOCKER_TAG
+
+      - name: 🔐 Deploy to Azure App Service (Container)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
