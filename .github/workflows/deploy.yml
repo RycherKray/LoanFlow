@@ -38,6 +38,6 @@ jobs:
       - name: 🔐 Deploy to Azure App Service (Container)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: loanflow-api-app
+          app-name: LoanFlow API
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
