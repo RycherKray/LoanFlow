@@ -7,17 +7,16 @@ import { environment } from '../../../environments/environment.prod';
 
 
 @Injectable({ providedIn: 'root' })
-export class LoanRequestService {
-  private readonly baseUrl = `https://loanflow-api-gkb2duebc2b6ctgy.scm.brazilsouth-01.azurewebsites.net/api/loans`;
+export class LoanRequestService { 
 
   constructor(private http: HttpClient) {}
 
   /** GET all processed loans */
   getLoans(): Observable<LoanRequestDto[]> {
-    return this.http.get<LoanRequestDto[]>(this.baseUrl);
+    return this.http.get<LoanRequestDto[]>(environment.apiLoansUrl);
   }
 
   createLoan(data: any): Observable<any> {
-    return this.http.post(this.baseUrl, data);
+    return this.http.post(environment.apiLoansUrl, data);
   }
 }
