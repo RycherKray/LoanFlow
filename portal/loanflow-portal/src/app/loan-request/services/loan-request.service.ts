@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class LoanRequestService {
-  private readonly baseUrl = `${environment.production}/loans`;
+  private readonly baseUrl = `https://loanflow-api-gkb2duebc2b6ctgy.scm.brazilsouth-01.azurewebsites.net/api/loans`;
 
   constructor(private http: HttpClient) {}
 
