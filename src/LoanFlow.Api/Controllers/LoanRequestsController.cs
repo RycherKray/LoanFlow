@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using LoanFlow.Application.Commands;
 using LoanFlow.Application.Queries;
 using LoanFlow.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LoanFlow.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/loans")]
 public sealed class LoanRequestsController : ControllerBase
 {
