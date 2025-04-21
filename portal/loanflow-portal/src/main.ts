@@ -7,17 +7,27 @@ import { PublicClientApplication } from '@azure/msal-browser';
 async function main() {
   const msalInstance = new PublicClientApplication(msalConfig);
 
-  // ⏳ Wait for MSAL to initialize
+  //  MSAL initialize
   await msalInstance.initialize();
 
-  // Optional: Check session and redirect to login
-  const accounts = msalInstance.getAllAccounts();
-  const active = msalInstance.getActiveAccount();
-  if (accounts.length === 0 && !active) {
-    await msalInstance.loginRedirect();
+  //  redirect response first
+  try {
+    await msalInstance.handleRedirectPromise();
+  } catch (error) {
+    console.error('Redirect error:', error);
   }
 
-  // 🚀 Now it's safe to bootstrap Angular
+  // check login state
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length === 0) {
+    // No user logged in — redirect to login
+    await msalInstance.loginRedirect();
+    return; // Stop bootstrapping — redirecting now
+  } else {
+    msalInstance.setActiveAccount(accounts[0]);
+  }
+
+  // Now it's safe to bootstrap Angular
   await bootstrapApplication(AppComponent, appConfig);
 }
 
