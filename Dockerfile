@@ -1,20 +1,21 @@
-# Stage 1: Restore and build
+# Use SDK image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
 WORKDIR /app
 
-# Copy solution and src folder
-COPY LoanFlow.sln ./
-COPY src/ ./
+# Copy everything including subfolders (src/, portal/, etc.)
+COPY . .
 
-# Restore dependencies
+# Restore dependencies using the solution
 RUN dotnet restore LoanFlow.sln
 
-# Build
-RUN dotnet publish LoanFlow.sln -c Release -o /app/publish
+# Publish only the API project
+RUN dotnet publish ./src/LoanFlow.Api/LoanFlow.Api.csproj -c Release -o /app/publish
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Final image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
 WORKDIR /app
 COPY --from=build /app/publish .
 
-ENTRYPOINT ["dotnet", "LoanFlow.API.dll"]
+ENTRYPOINT ["dotnet", "LoanFlow.Api.dll"]
