@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy solution and src folder
 COPY LoanFlow.sln ./
-COPY ./src ./src
+COPY src/ ./src/
 
 # Restore dependencies
 RUN dotnet restore LoanFlow.sln
