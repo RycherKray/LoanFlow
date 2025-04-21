@@ -24,7 +24,7 @@ jobs:
 
       - name: 🏗️ Build Docker image
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPO/$IMAGE_NAME:$DOCKER_TAG
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPO/$IMAGE_NAME:$DOCKER_TAG .
 
       - name: 📦 Push Docker image to Docker Hub
         run: |
