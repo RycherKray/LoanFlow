@@ -7,7 +7,7 @@ on:
     paths:
       - 'src/**'
       - 'LoanFlow.sln'
-      - '.github/workflows/backend.yml'
+      - '.github/workflows/backend.yml'          # Test Run Only Backend Pipeline on push
       
 env:
   IMAGE_NAME: loanflow-api
