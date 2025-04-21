@@ -14,8 +14,8 @@ import {
       clientId: '7ec95597-5cd7-4d53-b1bb-da5e203b32d4',
       authority: 'https://loanflowb2c.b2clogin.com/loanflowb2c.onmicrosoft.com/B2C_1_signup_signin',
       knownAuthorities: ['loanflowb2c.b2clogin.com'],
-      redirectUri: 'https://icy-forest-0aa10540f.6.azurestaticapps.net',
-      postLogoutRedirectUri: 'https://icy-forest-0aa10540f.6.azurestaticapps.net/'
+      redirectUri: 'https://icy-forest-0aa10540f.6.azurestaticapps.net/home',
+      postLogoutRedirectUri: 'https://icy-forest-0aa10540f.6.azurestaticapps.net/home'
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
