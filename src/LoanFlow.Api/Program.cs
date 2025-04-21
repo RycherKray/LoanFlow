@@ -20,10 +20,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularLocalhost", policy =>
+    options.AddPolicy("AllowSpecificOrigin", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .WithOrigins("https://icy-forest-0aa10540f.6.azurestaticapps.net")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -68,10 +68,9 @@ builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
 var app = builder.Build();
+app.UseCors("AllowSpecificOrigin");
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseRouting();
-app.UseCors("AllowAngularLocalhost");
-
 app.MapControllers();
 app.Run();
