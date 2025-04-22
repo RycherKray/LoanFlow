@@ -48,7 +48,7 @@ builder.Services.AddDbContext<LoanDbContext>(opt =>
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 
 // Cosmos
-builder.Services.AddSingleton(sp => new CosmosClient(builder.Configuration["Cosmos:Conn"]));
+builder.Services.AddSingleton(sp => new CosmosClient(builder.Configuration["CosmosConn"]));
 builder.Services.AddScoped<IProcessedLoanRepository, CosmosProcessedLoanRepository>();
 
 // MediatR
@@ -62,7 +62,7 @@ builder.Services.AddMediatR(cfg =>
 
 // Service Bus
 builder.Services.AddSingleton(sp =>
-    new ServiceBusClient(builder.Configuration["ServiceBus:Conn"]));
+    new ServiceBusClient(builder.Configuration["ServiceBusConn"]));
 builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
