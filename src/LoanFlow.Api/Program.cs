@@ -15,13 +15,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.Identity.Web;
 
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
-
-var allowedOrigins = "allowedOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: allowedOrigins,
+    options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
             policy.WithOrigins("https://icy-forest-0aa10540f.6.azurestaticapps.net")
@@ -68,8 +68,10 @@ builder.Services.AddSingleton<IServiceBusPublisher, AzureServiceBusPublisher>();
 
 
 var app = builder.Build();
-app.UseCors(allowedOrigins);
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
