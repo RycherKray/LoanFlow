@@ -43,7 +43,7 @@ builder.Services
 
 // EF Core + Azure SQL
 builder.Services.AddDbContext<LoanDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+    opt.UseSqlServer(Environment.GetEnvironmentVariable("SqlConnectionString")));
 
 // Repository
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
